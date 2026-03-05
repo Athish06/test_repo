@@ -1,0 +1,75 @@
+rules:
+- id: fixora-wrapper-upload-file
+  pattern: "def upload_file(...):\n  ..."
+  message: 'Vulnerable function ''upload_file()'' wraps os.path.join, open. Vulnerability:
+    Path Traversal. User-controlled filename is used to construct the file path without
+    proper sanitization.'
+  severity: WARNING
+  languages:
+  - python
+  metadata:
+    category: security
+    technology:
+    - python
+    source: fixora-ai-analysis
+    vulnerability_type: Path Traversal
+    confidence: MEDIUM
+    wrapper_defined_in: api/files.py
+    wraps:
+    - os.path.join
+    - open
+    modules_used:
+    - os
+    - builtins
+    cwe:
+    - CWE-22
+    owasp:
+    - A01:2021
+- id: fixora-wrapper-convert-image
+  pattern: "def convert_image(...):\n  ..."
+  message: 'Vulnerable function ''convert_image()'' wraps re.match. Vulnerability:
+    Command Injection. User-controlled filename and format are used to construct the
+    command without proper sanitization.'
+  severity: WARNING
+  languages:
+  - python
+  metadata:
+    category: security
+    technology:
+    - python
+    source: fixora-ai-analysis
+    vulnerability_type: Command Injection
+    confidence: MEDIUM
+    wrapper_defined_in: api/files.py
+    wraps:
+    - re.match
+    modules_used:
+    - re
+    cwe: &id001
+    - CWE-78
+    owasp: &id002
+    - A03:2021
+- id: fixora-wrapper-execute-background-task
+  pattern: "def execute_background_task(...):\n  ..."
+  message: 'Vulnerable function ''execute_background_task()'' wraps shlex.split, subprocess.run.
+    Vulnerability: Command Injection. User-controlled command string is used to construct
+    the command without proper sanitization.'
+  severity: WARNING
+  languages:
+  - python
+  metadata:
+    category: security
+    technology:
+    - python
+    source: fixora-ai-analysis
+    vulnerability_type: Command Injection
+    confidence: MEDIUM
+    wrapper_defined_in: core/system.py
+    wraps:
+    - shlex.split
+    - subprocess.run
+    modules_used:
+    - shlex
+    - subprocess
+    cwe: *id001
+    owasp: *id002
