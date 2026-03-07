@@ -708,19 +708,19 @@ jobs:
               echo "HTTP status: $HTTP_STATUS"
               cat /tmp/wh-response.txt || true
               if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
-                echo "âœ… Wrapper hunter results sent successfully (HTTP $HTTP_STATUS)"
+                echo "[OK] Wrapper hunter results sent successfully (HTTP $HTTP_STATUS)"
                 exit 0
               else
                 RETRY_COUNT=$((RETRY_COUNT + 1))
-                echo "âš ï¸  Attempt $RETRY_COUNT failed (HTTP $HTTP_STATUS). Retrying in 10s..."
+                echo "[WARNING] Attempt $RETRY_COUNT failed (HTTP $HTTP_STATUS). Retrying in 10s..."
                 sleep 10
               fi
             done
             
-            echo "âŒ Failed to send wrapper hunter results after $MAX_RETRIES attempts"
+            echo "[FAIL] Failed to send wrapper hunter results after $MAX_RETRIES attempts"
             exit 1
           else
-            echo "âš ï¸  No wrapper hunter results file found"
+            echo "[WARNING] No wrapper hunter results file found"
           fi
 
       - name: Upload Wrapper Hunter Artifacts
